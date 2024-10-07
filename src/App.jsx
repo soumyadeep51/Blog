@@ -3,9 +3,10 @@ import Register from './components/Register'
 import { authservice } from './appwrite_service/auth_service'
 import { useDispatch, useSelector } from 'react-redux' 
 import { login,logout } from './store/authSlice'
+import Header from './components/Header'
 function App() {
-  const dispatch=useDispatch()
-  const {isloggedin,userdata}=useSelector((state)=>state.auth)
+  /*const dispatch=useDispatch()
+   const {isloggedin,userdata}=useSelector((state)=>state.auth)
 
   useEffect(()=>{async function getuser(){
     const user=await authservice.getcurrentuser();
@@ -21,15 +22,10 @@ function App() {
    
 },[])
  console.log(userdata);
- 
+ */
   return (
     <>
-    {isloggedin?(<><h1>{userdata.name}</h1><button onClick={async()=>{
-      await authservice.logout()
-      dispatch(logout())
-    }}
-      >logout
-    </button></>):(<><Register></Register></>)}
+     <Header></Header>
       
     </>
   )
