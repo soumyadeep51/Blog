@@ -4,8 +4,8 @@ export class AuthService {
        client= new Client()
        account
        constructor() {
-          this.client.setEndpoint(String(import.meta.env.APPWRITE_URL))
-                     .setProject(String(import.meta.env.APPWRITE_PROJECT_ID))
+          this.client.setEndpoint(String(import.meta.env.VITE_APPWRITE_URL))
+                     .setProject(String(import.meta.env.VITE_APPWRITE_PROJECT_ID))
            this.account=new Account(this.client);
        }
        async createuser({email,password,name}){
@@ -16,7 +16,7 @@ export class AuthService {
              } 
              
        }
-       async login(email,password){
+       async login({email,password}){
               try {
                      const result= await this.account.createEmailPasswordSession(email,password)
                      
@@ -24,10 +24,7 @@ export class AuthService {
                      return result;
               } catch (error) {
                      console.log("appwrite :: auth.login :: error ",error);
-                     if (error.response && error.response.status===429) {
-                            console.log(error.response.headers['retry-after']);
-                            
-                     }
+                     
                      
               }
        }
@@ -40,9 +37,16 @@ export class AuthService {
               }
        }
        async getcurrentuser(){
-                const result=await this.account.get()
-               //console.log(result)
-                return result 
+                let name=null
+                try {
+                     const result=await this.account.get()
+                     name=result.name
+                }catch(error){
+                        name=null
+                } 
+               ///console.log(name);
+                
+                return name 
        
               }
 }
