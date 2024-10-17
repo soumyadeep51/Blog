@@ -37,16 +37,14 @@ export class AuthService {
               }
        }
        async getcurrentuser(){
-                let name=null
+       
                 try {
                      const result=await this.account.get()
-                     name=result.name
+                     return result
                 }catch(error){
-                        name=null
+                     console.log("Appwrite service :: auth.getcurrentuser :: error",error)
                 } 
-               ///console.log(name);
-                
-                return name 
+               
        
               }
 }

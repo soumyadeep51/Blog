@@ -1,14 +1,25 @@
 import React, { useState } from 'react'
 import { authservice } from '../appwrite_service/auth_service'
 import { redirect, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { login } from '../store/authSlice'
 function Login() {
 
-  const [login,setlogin]=useState({email:null,password:null})
+  const [log,setlogin]=useState({email:null,password:null})
   const navigate=useNavigate()
+  const dispatch=useDispatch()
   async function handleLogin(){
    try {
-    const data=await authservice.login(login)
-    console.log(data.name);
+    const user=await authservice.login(log)
+    const loggedinuser=await authservice.getcurrentuser()
+    try {
+      dispatch(login({userdata:loggedinuser}))
+      
+    } catch (error) {
+      console.log("could not store in store",error)
+    }
+    
+    //console.log(data.name);
     navigate('/')
     
    } catch (error) {

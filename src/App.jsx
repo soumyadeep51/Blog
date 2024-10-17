@@ -1,33 +1,48 @@
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Register from './components/Register'
 import { authservice } from './appwrite_service/auth_service'
 import { useDispatch, useSelector } from 'react-redux' 
 import { login,logout } from './store/authSlice'
 import Header from './components/Header'
-import { Outlet, redirect } from 'react-router-dom'
+import { Outlet, } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
+import Spinner from './components/Spinner'
 
 function App() {
     //const loggedin=useSelector((state)=>state.auth.status)
+    const [loading,setloading]=useState(true)
     const [log,setlog]=useState(null)
     const navigate=useNavigate()
-    useEffect(()=>{
-        authservice.getcurrentuser().then(
-          (data)=>{setlog(data)
-                if (!data) {
-                  return navigate("/login")
-                }      
-    })
-    },[navigate])
-  
-    //collection.listallposts().then(data=>console.log(data))
-  return (
-    <>
-      <Header/>
-      <Outlet/>
-    
-    </>
-  )
-}
+    const dispatch=useDispatch()
+    async function getuserandupdatestore(){
+                 const user=await authservice.getcurrentuser()
+                 if (user) {
+                    dispatch(login({userdata:user}))
+                    setloading(false)
+                 }else{
+                     navigate("/login")
+                     setloading(false)
+                  }   
+            }
+            useEffect(()=>{
+              getuserandupdatestore()
+            },[])
+           if (loading) {
+               return <div><Spinner/></div>
+           }
+            
+          return (
+            <>
+              <Header/>
+              <Outlet/>
+            
+            </>
+          )
+        }
+        
+        export default App
 
-export default App
+    /*async function updatestore(){
+          dispatch(login({userdata:log}))
+    }*/
+   
