@@ -9,12 +9,16 @@ export class collection_service{
                         this.database=new Databases(this.client)
                     }
     async createpost({title,content, image, userId}){
-        return await this.database.createDocument(
+        try {
+            return await this.database.createDocument(
                   String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
                   String(import.meta.env.VITE_APPWRITE_COLLECTION_ID),
                   ID.unique(),
                   {title,content,image,userId}
             )
+        }catch(error){
+            console.log("Appwrite service :: collection.createpost :: error",error)
+        }
 
     }
     async listallposts(){
