@@ -8,13 +8,13 @@ export class collection_service{
                         .setProject(String(import.meta.env.VITE_APPWRITE_PROJECT_ID))
                         this.database=new Databases(this.client)
                     }
-    async createpost({title,content, image, userId}){
+    async createpost({title,Content, featuredimage, user_id}){
         try {
             return await this.database.createDocument(
                   String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
                   String(import.meta.env.VITE_APPWRITE_COLLECTION_ID),
                   ID.unique(),
-                  {title,content,image,userId}
+                  {title,Content,featuredimage,user_id}
             )
         }catch(error){
             console.log("Appwrite service :: collection.createpost :: error",error)
@@ -26,7 +26,7 @@ export class collection_service{
             String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
             String(import.meta.env.VITE_APPWRITE_COLLECTION_ID),
             [
-                Query.equal("status",["active"])
+                
             ]
         )
     }                

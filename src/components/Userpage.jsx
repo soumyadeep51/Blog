@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import collection from '../appwrite_service/collection_service'
+import PostFeed from './PostFeed'
+import { Half1Icon } from '@radix-ui/react-icons'
 function Userpage() {
   // this is temporary call needs to be replaced with infinity scroll as posts increaseUserpage
   const [post,setPost]=useState(null)
@@ -13,7 +15,8 @@ function Userpage() {
   console.log(post)
   return (
     <div>
-      {(post)?(<div>
+      {(post)?(<PostFeed posts={post}/>):(<h1>No Posts to show</h1>)}
+      {/*(post)?(<div>
         {
         post.documents.map((data)=>
         <div key={data.$id}>    
@@ -26,7 +29,7 @@ function Userpage() {
         </div>
         
         )}
-      </div>):(<h1>No Posts to show</h1>)}       
+      </div>):(<h1>No Posts to show</h1>)*/}       
     </div>
   )
 }

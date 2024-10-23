@@ -36,28 +36,24 @@ function Header() {
     }
     ]
   return (
-    <>{/*Links need to be shown based on authstatus . work needs to be done here*/}
-     <nav className="navbar navbar-expand-lg bg-light">
-  <div className="container-fluid">
-    <Link className="navbar-brand" to="/">GradualMilligram</Link>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-       {navItems.map((navitem)=>(
-           <li className="nav-item" key={navitem.name}>
-            <Link className="nav-link active" to={navitem.slug}>{navitem.name}</Link>
-         </li>
-       ))}
-        
-      
-       </ul>
-      
+  <>
+  <nav className="bg-white shadow-md">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between h-16">
+        <div className="flex items-center">
+          <a href="#" className="text-xl font-bold text-blue-600">MyWebsite</a>
+        </div>
+        <div className="flex space-x-4 items-center">
+          {navItems.map((navitem)=>(
+            <Link to={navitem.slug} className="text-gray-600 hover:text-blue-500 transition">{navitem.name}</Link>
+          ))}
+          
+         
+        </div>
+      </div>
     </div>
-  </div>
-</nav>
-    </>
+  </nav>
+  </>
   )
 }
 
