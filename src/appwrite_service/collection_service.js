@@ -22,6 +22,7 @@ export class collection_service{
 
     }
     async listallposts(){
+        try{
         return await this.database.listDocuments(
             String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
             String(import.meta.env.VITE_APPWRITE_COLLECTION_ID),
@@ -29,6 +30,21 @@ export class collection_service{
                 
             ]
         )
+        }
+        catch(error){
+            console.log("appwrite service :: collection.listallpost :: error",error)
+        }
+    }
+    async deletePost(documentId){
+        try {
+            return await this.database.deleteDocument(
+            String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
+            String(import.meta.env.VITE_APPWRITE_COLLECTION_ID),
+            documentId
+        )
+       }catch(error){
+            console.log("appwrite service :: collection.deletePost :: error",error)
+       }
     }                
 }
 

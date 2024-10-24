@@ -7,7 +7,7 @@ import imageservice from '../appwrite_service/BucketService'
 function AddPost() {
   usecheckloggedin()
   const user=useSelector(state=>state.auth.userdata)
-  const user_id=user.$id
+  
   const [post,setPost]=useState()
   const [success,setSucess]=useState(false)
   const [file,setFile]=useState(null)
@@ -28,7 +28,7 @@ async function upload(file){
   return img.$id
 } 
   useEffect(()=>{
-    setPost({user_id:user_id})
+    setPost({user_id:user.$id})
     
     
     

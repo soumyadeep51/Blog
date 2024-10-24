@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import collection from '../appwrite_service/collection_service'
 import PostFeed from './PostFeed'
 import { Half1Icon } from '@radix-ui/react-icons'
+import checkloggedin from "../general_services/naviagtetologin"
 function Userpage() {
+  checkloggedin()
   // this is temporary call needs to be replaced with infinity scroll as posts increaseUserpage
   const [post,setPost]=useState(null)
   async function getallposts(){

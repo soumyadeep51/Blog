@@ -19,9 +19,10 @@ import { Client,ID,Storage } from "appwrite";
             
         }
     }
-    async getImage(file_id){
+     getImage(file_id){
         try {
-            const image= await this.storage.getFileView(String(import.meta.env.VITE_APPWRITE_IMAGES_BUCKET_ID),file_id)
+            const image= this.storage.getFileView(String(import.meta.env.VITE_APPWRITE_IMAGES_BUCKET_ID),file_id)
+            console.log(image.href)
             return image.href
         } catch (error) {
             console.log("appwrite service :: getimage ::error ",error)       
