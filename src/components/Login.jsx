@@ -6,30 +6,28 @@ import { login } from '../store/authSlice'
 function Login() {
 
   const [log,setlogin]=useState({email:null,password:null})
+  const [message,setMessage]=useState('')
   const navigate=useNavigate()
   const dispatch=useDispatch()
   async function handleLogin(){
-   try {
-    const user=await authservice.login(log)
-    const loggedinuser=await authservice.getcurrentuser()
-    try {
+     const user=await authservice.login(log)
+     const loggedinuser=await authservice.getcurrentuser(user)
+     if (!loggedinuser) {
+      setMessage("Invalid username or password")
+     }else{
       dispatch(login({userdata:loggedinuser}))
-      
-    } catch (error) {
-      console.log("could not store in store",error)
-    }
+      navigate("/")
+     }
     
-    //console.log(data.name);
-    navigate('/')
+
     
-   } catch (error) {
-    console.log('couldnt login')
-   }
+    
+   
 }
   
   return (
-    <div>
-      <div className="bg-white shadow-md rounded-lg px-8 py-6 w-full max-w-sm">
+    <div class="flex items-center justify-center min-h-screen">
+    <div className="bg-white shadow-md rounded-lg px-8 py-6 w-full max-w-sm">
     <h2 className="text-2xl font-semibold text-center text-gray-700 mb-4">Login</h2>
     
       <div className="mb-4">
@@ -67,8 +65,10 @@ function Login() {
         Don't have an account?
         <a href="#" className="text-blue-500 hover:underline">Sign up</a>
       </p>
-    
+      
    </div>
+   <br />
+   {message}
 </div>
 
 

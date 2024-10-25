@@ -5,20 +5,26 @@ import {logout} from "../store/authSlice"
 import { authservice } from '../appwrite_service/auth_service'
 import { useNavigate } from 'react-router-dom'
 import PostFeed from './PostFeed'
-
+import collection from '@/appwrite_service/collection_service'
 function Main() {
-  const [name,setname]=useState('')
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const user=useSelector(state=>state.auth.userdata)
   const isloggedin=useSelector(state=>state.auth.isloggedin)
-   console.log(user)
+  const [post,setPost]=useState(null)
+  async function getposts(){
+    const posts=await collection.listallposts()
+    setPost(posts)
+  }
   
   useEffect(()=>{
     if (!isloggedin) {
       navigate("/login")
+    }else{
+      getposts()
+      console.log("from main",post)  
     }
-  },[isloggedin])
+  },[])
   return (
     <div>
      
@@ -30,6 +36,8 @@ function Main() {
         dispatch(logout())
         //navigate("/login")
        }}>Logout</button>
+       {(post)?(<PostFeed posts={post} userdata={user}/>):(<></>)}
+       
     </div>
   )
 }

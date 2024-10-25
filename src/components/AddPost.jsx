@@ -7,7 +7,6 @@ import imageservice from '../appwrite_service/BucketService'
 function AddPost() {
   usecheckloggedin()
   const user=useSelector(state=>state.auth.userdata)
-  
   const [post,setPost]=useState()
   const [success,setSucess]=useState(false)
   const [file,setFile]=useState(null)
@@ -28,11 +27,11 @@ async function upload(file){
   return img.$id
 } 
   useEffect(()=>{
-    setPost({user_id:user.$id})
+    setPost({user_id:user.$id,owner_name:user.name})
+    console.log(post)
     
     
-    
-},[])
+},[user])
   return (
     <div>
        <form onSubmit={e=>e.preventDefault()}>
@@ -41,17 +40,17 @@ async function upload(file){
         <label htmlFor="content">Content:</label>
         <textarea name="content" id="" onChange={e=>setPost((prev)=>({...prev,Content:e.target.value}))}></textarea>
         <input type="file" name="image/*" onChange={(e)=>{setFile(e.target.files[0])
-        
+         console.log("after image",post)
         }} />
         <button onClick={async(e)=>{const img=await upload(file)
           console.log("from upload button :",img)
           setPost((prev)=>({...prev,featuredimage:img}))
           console.log("from upload button :",post)
         }}>upload</button>
-        <button onClick={async()=>{
+        <button onClick={()=>{
           createpost()
-         setSucess(true)
-        setPost(null)
+        
+        
         
         }}>Create</button>
         </form> 

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import imageservice from '../appwrite_service/BucketService'
 import { useSelector } from 'react-redux'
 import collectionservice from '@/appwrite_service/collection_service'
-function PostFeed({posts}) {
-  const userdata=useSelector((state)=>state.auth.userdata)
-  console.log(posts)
+function PostFeed({posts,userdata}) {
+  
+  //console.log(posts)
   const [statepost,setStatepost]=useState(posts.documents)
   async function deletepost(postid){
       await collectionservice.deletePost(postid)
@@ -24,7 +24,7 @@ function PostFeed({posts}) {
         <img className="w-12 h-12 rounded-full" src="https://via.placeholder.com/48" alt="Profile Picture"/>
         <div className="ml-4 flex-1">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold text-gray-800">John Doe</h3>
+            <h3 className="text-lg font-semibold text-gray-800">{post.owner_name}</h3>
             <span className="text-gray-500 text-sm">2h ago</span>
           </div>
           <p className="text-gray-700 mt-1">{post.title}</p>
@@ -58,7 +58,7 @@ function PostFeed({posts}) {
                     <path d="M19 6l-1 14H6L5 6"></path>
                     <path d="M10 11v6"></path>
                     <path d="M14 11v6"></path>
-                      <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
+                    <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
                 </svg>
                 </button>
             ):(<></>)}

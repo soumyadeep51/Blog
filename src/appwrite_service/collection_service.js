@@ -8,13 +8,13 @@ export class collection_service{
                         .setProject(String(import.meta.env.VITE_APPWRITE_PROJECT_ID))
                         this.database=new Databases(this.client)
                     }
-    async createpost({title,Content, featuredimage, user_id}){
+    async createpost({title,Content, featuredimage, user_id,owner_name}){
         try {
             return await this.database.createDocument(
                   String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
                   String(import.meta.env.VITE_APPWRITE_COLLECTION_ID),
                   ID.unique(),
-                  {title,Content,featuredimage,user_id}
+                  {title,Content,featuredimage,user_id,owner_name}
             )
         }catch(error){
             console.log("Appwrite service :: collection.createpost :: error",error)
@@ -33,6 +33,19 @@ export class collection_service{
         }
         catch(error){
             console.log("appwrite service :: collection.listallpost :: error",error)
+        }
+    }
+    async UserPosts(userid){
+        try{
+            return await this.database.listDocuments(
+                String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
+                String(import.meta.env.VITE_APPWRITE_COLLECTION_ID),
+                [
+                   Query.equal("user_id",[userid])
+                ]
+            ) 
+        }catch(error){
+               console.log("appwrite service :: collection.getuserpost :: error",error)
         }
     }
     async deletePost(documentId){

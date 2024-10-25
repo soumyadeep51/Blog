@@ -3,21 +3,24 @@ import collection from '../appwrite_service/collection_service'
 import PostFeed from './PostFeed'
 import { Half1Icon } from '@radix-ui/react-icons'
 import checkloggedin from "../general_services/naviagtetologin"
+import { useSelector } from 'react-redux'
 function Userpage() {
   checkloggedin()
   // this is temporary call needs to be replaced with infinity scroll as posts increaseUserpage
+  const userdata=useSelector((state)=>state.auth.userdata)
+  
   const [post,setPost]=useState(null)
   async function getallposts(){
-     const posts=await collection.listallposts()
+     const posts=await collection.UserPosts(userdata.$id)
      setPost(posts)    
   }
   useEffect(()=>{
       getallposts()
   },[])
-  console.log(post)
+  console.log("posts from userpage"+post)
   return (
     <div>
-      {(post)?(<PostFeed posts={post}/>):(<h1>No Posts to show</h1>)}
+      {(post)?(<PostFeed posts={post} userdata={userdata}/>):(<h1>No Posts to show</h1>)}
       {/*(post)?(<div>
         {
         post.documents.map((data)=>
