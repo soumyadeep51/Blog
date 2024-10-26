@@ -6,7 +6,9 @@ import { authservice } from '../appwrite_service/auth_service'
 import { useNavigate } from 'react-router-dom'
 import PostFeed from './PostFeed'
 import collection from '@/appwrite_service/collection_service'
+import CheckLoggedin from '@/general_services/naviagtetologin'
 function Main() {
+  
   const dispatch=useDispatch()
   const navigate=useNavigate()
   const user=useSelector(state=>state.auth.userdata)
@@ -24,7 +26,7 @@ function Main() {
       getposts()
       console.log("from main",post)  
     }
-  },[])
+  },[isloggedin])
   return (
     <div>
      

@@ -7,6 +7,7 @@ import Header from './components/Header'
 import { Outlet, } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import Spinner from './components/Spinner'
+import checkloggedin from "./general_services/naviagtetologin"
 
 function App() {
     //const loggedin=useSelector((state)=>state.auth.status)
@@ -34,6 +35,7 @@ function App() {
           return (
             <>
               <Header/>
+             
               <Outlet/>
             
             </>

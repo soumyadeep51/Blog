@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react'
 import imageservice from '../appwrite_service/BucketService'
 import { useSelector } from 'react-redux'
 import collectionservice from '@/appwrite_service/collection_service'
+import useCheckLoggedin from '@/general_services/naviagtetologin'
 function PostFeed({posts,userdata}) {
-  
+  //useCheckLoggedin()
   //console.log(posts)
+  const [userid,setUserid]=useState(userdata?.$id)
   const [statepost,setStatepost]=useState(posts.documents)
   async function deletepost(postid){
       await collectionservice.deletePost(postid)
       setStatepost(statepost.filter(posts=>posts.$id!=postid))
   }
   useEffect(()=>{
-
+           
   },[statepost])  
   return (
     <>
@@ -51,7 +53,7 @@ function PostFeed({posts,userdata}) {
               </svg>
               Share
             </button>
-            {(post.user_id==userdata.$id)?(
+            {(post.user_id==userid)?(
             <button class="text-gray-500 hover:text-red-500" onClick={()=>deletepost(post.$id)}>
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                     <path d="M3 6h18"></path>
