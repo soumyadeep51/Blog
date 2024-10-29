@@ -58,7 +58,8 @@ export class collection_service{
        }catch(error){
             console.log("appwrite service :: collection.deletePost :: error",error)
        }
-    }                
+    }
+                    
 }
 
 const  collection=new collection_service()

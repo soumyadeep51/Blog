@@ -3,9 +3,11 @@ import imageservice from '../appwrite_service/BucketService'
 import { useSelector } from 'react-redux'
 import collectionservice from '@/appwrite_service/collection_service'
 import useCheckLoggedin from '@/general_services/naviagtetologin'
+import CommentSection from './CommentSection'
 function PostFeed({posts,userdata}) {
   //useCheckLoggedin()
   //console.log(posts)
+  const [openCS,setopenCS]=useState(false)
   const [userid,setUserid]=useState(userdata?.$id)
   const [statepost,setStatepost]=useState(posts.documents)
   async function deletepost(postid){
@@ -14,13 +16,14 @@ function PostFeed({posts,userdata}) {
   }
   useEffect(()=>{
            
-  },[statepost])  
+  },[statepost,openCS])  
   return (
-    <>
-    
-  <div className="max-w-3xl mx-auto mt-6 px-4 sm:px-6 lg:px-8">
+   
+   <>
+    <div className="max-w-3xl mx-auto mt-6 px-4 sm:px-6 lg:px-8">
     <h2 className="text-2xl font-semibold text-gray-800 mb-4">Posts</h2>
      {statepost.map((post)=>(
+    <>
      <div className="bg-white rounded-lg shadow-md p-4 mb-6">
       <div className="flex items-start">
         <img className="w-12 h-12 rounded-full" src="https://via.placeholder.com/48" alt="Profile Picture"/>
@@ -41,7 +44,7 @@ function PostFeed({posts,userdata}) {
               </svg>
               Like
             </button>
-            <button className="flex items-center hover:text-blue-500 transition">
+            <button className="flex items-center hover:text-blue-500 transition" onClick={()=>{setopenCS(true)}}>
               <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h6"></path>
               </svg>
@@ -67,12 +70,17 @@ function PostFeed({posts,userdata}) {
           </div>
         </div>
       </div>
+     
     </div>
+    {(openCS)?(<><CommentSection setopenCS={setopenCS}/>   </>):(<></>)}  
+
+  </>
+  
   ))}
 </div>
 
-    </>
-  )
-}
+
+   </>  
+)}
 
 export default PostFeed

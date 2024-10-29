@@ -9,8 +9,9 @@ import { useNavigate } from 'react-router-dom'
 import Spinner from './components/Spinner'
 import checkloggedin from "./general_services/naviagtetologin"
 
+
 function App() {
-    //const loggedin=useSelector((state)=>state.auth.status)
+    //const loggedin=useSelector((state)=>state.auth.status
     const [loading,setloading]=useState(true)
     const [log,setlog]=useState(null)
     const navigate=useNavigate()
