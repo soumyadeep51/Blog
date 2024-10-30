@@ -1,0 +1,2 @@
+1.Re-render on clicking comments
+2.few class has to be converted to classname

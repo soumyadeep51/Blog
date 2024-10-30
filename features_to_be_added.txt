@@ -1,0 +1,2 @@
+1.Spinner for user feedback on comments section
+2.New user register
