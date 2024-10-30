@@ -19,7 +19,7 @@ function AddPost() {
     }
   
     }catch{
-      console.log("could not create post")
+      
     }
 }
 async function upload(file){
@@ -28,7 +28,7 @@ async function upload(file){
 } 
   useEffect(()=>{
     setPost({user_id:user.$id,owner_name:user.name})
-    console.log(post)
+  
     
     
 },[user])

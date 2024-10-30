@@ -8,6 +8,7 @@ function PostFeed({posts,userdata}) {
   //useCheckLoggedin()
   //console.log(posts)
   const [openCS,setopenCS]=useState(false)
+  const [commentpostid,setCommentPostid]=useState()
   const [userid,setUserid]=useState(userdata?.$id)
   const [statepost,setStatepost]=useState(posts.documents)
   async function deletepost(postid){
@@ -18,8 +19,7 @@ function PostFeed({posts,userdata}) {
            
   },[statepost,openCS])  
   return (
-   
-   <>
+      <>
     <div className="max-w-3xl mx-auto mt-6 px-4 sm:px-6 lg:px-8">
     <h2 className="text-2xl font-semibold text-gray-800 mb-4">Posts</h2>
      {statepost.map((post)=>(
@@ -44,12 +44,16 @@ function PostFeed({posts,userdata}) {
               </svg>
               Like
             </button>
-            <button className="flex items-center hover:text-blue-500 transition" onClick={()=>{setopenCS(true)}}>
+            <button className="flex items-center hover:text-blue-500 transition" onClick={()=>{setopenCS(true)
+              setCommentPostid(post?.$id)
+            }}>
               <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M7 8h10M7 12h6"></path>
               </svg>
               Comment
             </button>
+              
+
             <button className="flex items-center hover:text-blue-500 transition" >
               <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h2a2 2 0 012 2v8a2 2 0 01-2 2H7a2 2 0 01-2-2v-8a2 2 0 012-2h2m4-3v12m-6 0v2m12-2v2m-6-2h.01"></path>
@@ -70,10 +74,10 @@ function PostFeed({posts,userdata}) {
           </div>
         </div>
       </div>
+      {(openCS)?(<><CommentSection setopenCS={setopenCS} commentername={userdata?.name} postid={commentpostid}/>   </>):(<></>)}
      
     </div>
-    {(openCS)?(<><CommentSection setopenCS={setopenCS}/>   </>):(<></>)}  
-
+  
   </>
   
   ))}

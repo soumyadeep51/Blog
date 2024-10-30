@@ -59,7 +59,31 @@ export class collection_service{
             console.log("appwrite service :: collection.deletePost :: error",error)
        }
     }
-                    
+    async getCommentsList(postid){
+        try{
+            return await this.database.listDocuments(
+                String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
+                String(import.meta.env.VITE_APPWRITE_COMMENTS_ID),
+                [
+                    Query.equal("postid",[postid])
+                ]
+            )
+        }catch(error){
+             console.log("Error from collection service.getCommentslist",error)
+        }
+    }
+    async createComment(postid,comment,commentername){
+          try{
+            return await this.database.createDocument(
+              String(import.meta.env.VITE_APPWRITE_DATABASE_ID),
+              String(import.meta.env.VITE_APPWRITE_COMMENTS_ID),
+              ID.unique(),
+              {postid,comment,commentername}
+            )
+          }catch(error){
+               console.log("appwrite service:: postcomment.error :: error ",error)
+          }
+    }            
 }
 
 const  collection=new collection_service()
